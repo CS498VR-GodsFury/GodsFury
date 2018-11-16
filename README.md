@@ -1,1 +1,1 @@
-# GodsFury
+Gods Fury
