@@ -12,7 +12,13 @@ public class cameraControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //this.transform.rotation = new Quaternion(1, 0, 0, 0);
-        this.transform.position = GameObject.Find("CenterEyeAnchor").transform.position + new Vector3(0,0,2);
+        OVRInput.Update();
+        var axis = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
+        var curPos = this.transform.position;
+        var curRot = this.transform.rotation;
+        curPos += new Vector3(0, axis.y*0.3f, 0);
+        curRot.eulerAngles += new Vector3(0, axis.x*0.1f, 0);
+        //this.transform.rotation = curRot;
+        this.transform.position = curPos;
     }
 }
