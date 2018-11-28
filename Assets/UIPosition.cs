@@ -11,7 +11,7 @@ public class UIPosition : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        this.transform.position = GameObject.Find("OVRCameraRig").transform.position + new Vector3(0, 0.5f, 2.5f);
-        //this.transform.rotation = GameObject.Find("OVRCameraRig").transform.rotation;
+        this.transform.position = GameObject.Find("OVRCameraRig").transform.position + new Vector3(0, 0.5f, 0) + GameObject.Find("OVRCameraRig").transform.forward*2.5f;
+        this.transform.rotation = GameObject.Find("OVRCameraRig").transform.rotation;
 	}
 }

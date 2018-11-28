@@ -21,6 +21,6 @@ public class LeftHandController : MonoBehaviour {
         //var curRotation = this.transform.rotation;
         // curRotation.eulerAngles = new Vector3(0, 0, 0);
         //curRotation.eulerAngles += new Vector3(90, 0, 0);
-        this.transform.rotation = curRotation;
+        this.transform.localRotation = curRotation;
     }
 }

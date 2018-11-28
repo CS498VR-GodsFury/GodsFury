@@ -45,7 +45,8 @@ public class LazerInitialization : MonoBehaviour {
                 var offset = (curPosition - startControllerPosition)*(startCameraPosition.y/2);
                 //print(offset);
                 offset.y = 0;
-                GameObject.Find("OVRCameraRig").transform.position = startCameraPosition - offset;
+                GameObject.Find("OVRCameraRig").transform.position = startCameraPosition;
+                GameObject.Find("OVRCameraRig").transform.Translate(- offset, Space.Self);
             }
             else
             {

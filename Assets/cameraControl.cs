@@ -18,7 +18,7 @@ public class cameraControl : MonoBehaviour {
         var curRot = this.transform.rotation;
         curPos += new Vector3(0, axis.y*0.3f, 0);
         curRot.eulerAngles += new Vector3(0, axis.x*0.1f, 0);
-        //this.transform.rotation = curRot;
+        this.transform.rotation = curRot;
         this.transform.position = curPos;
     }
 }
