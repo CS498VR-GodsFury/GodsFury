@@ -9,9 +9,10 @@ public class LazerInitialization : MonoBehaviour {
     public Vector3 hitPoint;
     Vector3 startControllerPosition;
     Vector3 startCameraPosition;
+    public Vector3[] LRpoints;
     private Ray lazerRay;
     private bool buttonStatus;
-    private string[] buttonNames = { "Button1", "Button2", "Button3" };
+    private bool isHit;
 	void Start () {
         hitPoint = new Vector3(0, 0, 0);
         var curRotation = this.transform.localRotation;
@@ -19,32 +20,30 @@ public class LazerInitialization : MonoBehaviour {
         this.transform.localPosition = new Vector3(0, 0, 0);
         this.transform.localRotation = curRotation;
         buttonStatus = false;
+        LRpoints = new Vector3[2];
     }
 	
     void doRayCasting()
     {
         /* from unity website */
-        //Ray lazerRay = new Ray(this.transform.position, this.transform.up);
         lazerRay.origin = this.transform.position;
         lazerRay.direction = this.transform.up;
         RaycastHit hitInfo = new RaycastHit();
         var controllerR = OVRInput.Controller.RTouch;
         var curPosition = OVRInput.GetLocalControllerPosition(controllerR);
-        LineRenderer lr = rayTrack.GetComponent<LineRenderer>();
+        
         if (Physics.Raycast(lazerRay, out hitInfo))
         {
+            LRpoints[1] = hitInfo.point;
+            isHit = true;
+
             GameObject.Find("targetContainer").transform.position = hitInfo.point - lazerRay.direction * 0.2f;
             GameObject.Find("target").transform.forward = lazerRay.direction;
-            
-            Vector3[] points = new Vector3[2] { this.transform.position, hitInfo.point };
-            lr.SetPositions(points);
-           
-            //print(hitPoint);
 
             if (OVRInput.Get(OVRInput.RawButton.RHandTrigger))
             {
                 var offset = (curPosition - startControllerPosition)*(startCameraPosition.y/2);
-                print(offset);
+                //print(offset);
                 offset.y = 0;
                 GameObject.Find("OVRCameraRig").transform.position = startCameraPosition - offset;
             }
@@ -71,13 +70,20 @@ public class LazerInitialization : MonoBehaviour {
         }
         else
         {
-            Vector3[] points = new Vector3[2] { this.transform.position, this.transform.position + this.transform.up*100f };
-            lr.SetPositions(points);
+            isHit = false;
         }
         
     }
-	// Update is called once per frame
-	void Update () {
+
+    private void LateUpdate()
+    {
+        LineRenderer lr = rayTrack.GetComponent<LineRenderer>();
+        LRpoints[0] = this.transform.position;
+        if (!isHit) LRpoints[1] = this.transform.position + this.transform.up * 50f;
+        lr.SetPositions(LRpoints);
+    }
+    // Update is called once per frame
+    void Update () {
         //print(1 / Time.deltaTime);
         OVRInput.Update();
 

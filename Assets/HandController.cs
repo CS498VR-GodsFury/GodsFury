@@ -14,7 +14,7 @@ public class HandController : MonoBehaviour {
         OVRInput.Update();
         var controllerR = OVRInput.Controller.RTouch;
         var curPosition = OVRInput.GetLocalControllerPosition(controllerR);// + GameObject.Find("OVRCameraRig").transform.position;
-
+        //print(curPosition);
         var curRotation = OVRInput.GetLocalControllerRotation(controllerR);
         //print(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
         this.transform.localPosition = curPosition;

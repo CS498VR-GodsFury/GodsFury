@@ -16,35 +16,10 @@ public class HandInit : MonoBehaviour {
         this.transform.localRotation = curRotation;
     }
 
-    private void checkGrab()
-    {
-        var tr = pen.GetComponent<Transform>().position;
-        if (Vector3.Distance(this.transform.position, tr) < 0.05)
-        {
-            if (grab) penInHand = true;
-        };
-        if (!grab) penInHand = false;
-    }
 
     // Update is called once per frame
     void Update()
     {
         OVRInput.Update();
-        grab = (OVRInput.Get(OVRInput.Button.SecondaryHandTrigger));
-        checkGrab();
-        if(grab)
-        {
-            var scale = this.transform.localScale;
-            scale = new Vector3(scale.x, scale.y, 0.0007f);
-            this.transform.localScale = scale;
-
-        }
-        else
-        {
-            var scale = this.transform.localScale;
-            scale = new Vector3(scale.x, scale.y, 0.001f);
-            this.transform.localScale = scale;
-        }
-
     }
 }
