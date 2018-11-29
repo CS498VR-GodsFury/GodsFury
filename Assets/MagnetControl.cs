@@ -32,7 +32,7 @@ public class MagnetControl : MonoBehaviour {
                 var rBody = collider.gameObject.GetComponent<Rigidbody>();
                 var distCof = towardsVector.magnitude;
                 if (distCof < radius*1.1f) rBody.velocity = new Vector3(0, 0, 0);
-                rBody.AddForce(towardsVector.normalized*500* rBody.mass);
+                rBody.AddForce(towardsVector.normalized*900f* rBody.mass);
                 //print(distCof);
             }
             catch
@@ -44,6 +44,10 @@ public class MagnetControl : MonoBehaviour {
     // Update is called once per frame
     private void LateUpdate()
     {
+        if (GameObject.Find("leftHand").GetComponent<LeftHandSelector>().selectedWeapon != "Magnet")
+        {
+            return;
+        }
         var dTime = Time.deltaTime;
         var hand = GameObject.Find("leftHand");
         var handPosition = hand.transform.position;
@@ -67,6 +71,7 @@ public class MagnetControl : MonoBehaviour {
         if( (newOffset.magnitude > 0.01f)&&(offset.magnitude>1f) )
             this.GetComponent<Rigidbody>().MovePosition(this.transform.position + offset*4f*dTime);
         checkOverlap();
+
     }
 
     void controlMagnet()
@@ -103,6 +108,13 @@ public class MagnetControl : MonoBehaviour {
     }
     void Update () {
         OVRInput.Update();
+        if( GameObject.Find("leftHand").GetComponent<LeftHandSelector>().selectedWeapon != "Magnet" )
+        {
+            this.radius = 0f;
+            this.distance = 20f;
+            GameObject.Find("MagnetField").transform.localScale = new Vector3(2 * radius, 2 * radius, 2 * radius);
+            return;
+        }
         controlMagnet();
         GameObject.Find("MagnetField").transform.localScale = new Vector3(2 * radius, 2 * radius, 2 * radius);
 	}
