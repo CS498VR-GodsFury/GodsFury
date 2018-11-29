@@ -8,6 +8,7 @@ public class MagnetControl : MonoBehaviour {
     public float radius;
     public float distance;
     Vector3 offset;
+    bool YPressed;
 	void Start () {
         offset = new Vector3(0, 0, 0);
         radius = 0f;
@@ -15,6 +16,7 @@ public class MagnetControl : MonoBehaviour {
         var hand = GameObject.Find("leftHand");
         var handPosition = hand.transform.position;
         this.transform.position = handPosition + hand.transform.up*distance;
+        YPressed = false;
         //GameObject.Find("MagnetField").position = handPosition + hand.transform.up * 20f
     }
 	
@@ -69,14 +71,22 @@ public class MagnetControl : MonoBehaviour {
 
     void controlMagnet()
     {
-        if( OVRInput.GetDown(OVRInput.RawButton.Y) )
+        if( OVRInput.Get(OVRInput.RawButton.Y) )
         {
-            if (this.radius > 0)
+            if (!YPressed)
             {
-                this.radius = 0;
-                this.distance = 20f;
+                if (this.radius > 0)
+                {
+                    this.radius = 0;
+                    this.distance = 20f;
+                }
+                else this.radius = 5f;
             }
-            else this.radius = 5f;
+            YPressed = true;
+        }
+        else
+        {
+            YPressed = false;
         }
 
         if(this.radius > 0)
