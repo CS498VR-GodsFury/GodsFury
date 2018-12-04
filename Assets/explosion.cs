@@ -13,7 +13,7 @@ public class explosion : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        
         Vector3 explosionPosition = gameObject.transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
         foreach (Collider hit in colliders)
@@ -27,6 +27,7 @@ public class explosion : MonoBehaviour
             }
                
         }
+        
     }
 
     // Update is called once per frame
