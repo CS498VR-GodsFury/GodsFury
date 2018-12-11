@@ -12,8 +12,8 @@ public class Meteormovement : MonoBehaviour {
     private float velocity = 10.0f;
     private Vector3 directionVector;
 
-    private const float MAX_POWER = 100000000.0f;
-    private const float IMPACT_RADIUS = 20.0f;
+    private const float MAX_POWER = 60000000.0f;
+    private const float IMPACT_RADIUS = 50.0f;
 
     private bool endOfLifeCycle;
     public bool shoot;
@@ -27,9 +27,12 @@ public class Meteormovement : MonoBehaviour {
     private void reset()
     {
         shoot = false;
-        transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        //transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         transform.position = new Vector3(-97, 1024, -840);
         this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+        ParticleSystem exp = expObject.GetComponent<ParticleSystem>();
+        exp.Stop();
     }
 
     private void Update()
@@ -52,12 +55,14 @@ public class Meteormovement : MonoBehaviour {
     {
         endOfLifeCycle = false;
         currentPosition = transform.position;
+        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        comet.GetComponent<Rigidbody>().isKinematic = false;
         /* 
          * TODO When imported in final project, the way that the comet gets its target position needs to be implemented.
          * Either it can read from the target laser object and see where it is pointing OR,
          * the target marker can spawn an empty object (or a visible marker) and the comet can read its position when it is created
          */
-         
+
 
         directionVector = targetPosition - currentPosition;
         this.GetComponent<Rigidbody>().AddForce(directionVector * velocity);
@@ -78,7 +83,12 @@ public class Meteormovement : MonoBehaviour {
             Rigidbody objectBody = col.gameObject.GetComponent<Rigidbody>();
 
             float power = MAX_POWER;
-            objectBody.AddExplosionForce(power, impactPos, IMPACT_RADIUS, 0.0f, ForceMode.Impulse);
+            try
+            {
+                objectBody.AddExplosionForce(power, impactPos, IMPACT_RADIUS, 0.0f, ForceMode.Impulse);
+            }
+            catch
+            { }
         }
     }
 
@@ -95,15 +105,16 @@ public class Meteormovement : MonoBehaviour {
     {
         if (endOfLifeCycle)
             return;
-
+        comet.GetComponent<Rigidbody>().isKinematic = true;
+        transform.localScale = new Vector3(0, 0, 0);
         endOfLifeCycle = true;
         Vector3 impactPosition = transform.position;
         Explode(impactPosition);
 
         repelAllBuildings(impactPosition);
 
-        despawnComet();
-        //reset();
+        //despawnComet();
+        Invoke("reset", 5);
     }
 
 }

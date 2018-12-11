@@ -9247,7 +9247,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 848567343}
-  m_LocalRotation: {x: -0.14573576, y: 0.227238, z: 0.0344161, w: 0.96225756}
+  m_LocalRotation: {x: -0.10923379, y: -0.59977585, z: 0.08310879, w: -0.78830826}
   m_LocalPosition: {x: -813.84644, y: -376.41846, z: -1146.8418}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -19721,6 +19721,10 @@ Prefab:
     - target: {fileID: 4783361561301610, guid: 57163fda106b1d547876572da22ea1b9, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831644196943660, guid: 57163fda106b1d547876572da22ea1b9, type: 2}
+      propertyPath: m_Name
+      value: CometObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57163fda106b1d547876572da22ea1b9, type: 2}
