@@ -13,7 +13,7 @@ public class Meteormovement : MonoBehaviour {
     private Vector3 directionVector;
 
     private const float MAX_POWER = 60000000.0f;
-    private const float IMPACT_RADIUS = 50.0f;
+    private const float IMPACT_RADIUS = 75.0f;
 
     private bool endOfLifeCycle;
     public bool shoot;
@@ -29,7 +29,7 @@ public class Meteormovement : MonoBehaviour {
         shoot = false;
         this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         //transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-        transform.position = new Vector3(-97, 1024, -840);
+        transform.position = new Vector3(-97, 10240, -840);
         this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         ParticleSystem exp = expObject.GetComponent<ParticleSystem>();
         exp.Stop();
@@ -39,7 +39,8 @@ public class Meteormovement : MonoBehaviour {
     {
         OVRInput.Update();
         LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
-        if(OVRInput.Get(OVRInput.RawButton.Y)&&(!shoot))
+        if (GameObject.Find("leftHand").GetComponent<LeftHandSelector>().selectedWeapon != "Comet") return;
+        if (OVRInput.Get(OVRInput.RawButton.Y)&&(!shoot))
         {
             if(lazerInfo.isHit)
             {
@@ -52,7 +53,9 @@ public class Meteormovement : MonoBehaviour {
     }
 
     private void init(Vector3 targetPosition)
-    {
+    {    
+        var temp = GameObject.Find("OVRCameraRig").transform.position;
+        transform.position = new Vector3(temp.x + Random.Range(-850, 850), temp.y + 1024, temp.z + Random.Range(-850, 850));
         endOfLifeCycle = false;
         currentPosition = transform.position;
         this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -85,7 +88,7 @@ public class Meteormovement : MonoBehaviour {
             float power = MAX_POWER;
             try
             {
-                objectBody.AddExplosionForce(power, impactPos, IMPACT_RADIUS, 0.0f, ForceMode.Impulse);
+                objectBody.AddExplosionForce(power, impactPos, IMPACT_RADIUS, -5.0f, ForceMode.Impulse);
             }
             catch
             { }

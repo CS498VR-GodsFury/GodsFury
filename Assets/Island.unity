@@ -19726,6 +19726,18 @@ Prefab:
       propertyPath: m_Name
       value: CometObject
       objectReference: {fileID: 0}
+    - target: {fileID: 4994024640892958, guid: 57163fda106b1d547876572da22ea1b9, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994024640892958, guid: 57163fda106b1d547876572da22ea1b9, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994024640892958, guid: 57163fda106b1d547876572da22ea1b9, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57163fda106b1d547876572da22ea1b9, type: 2}
   m_IsPrefabAsset: 0
