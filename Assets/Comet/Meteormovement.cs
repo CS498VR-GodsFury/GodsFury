@@ -16,9 +16,40 @@ public class Meteormovement : MonoBehaviour {
     private const float IMPACT_RADIUS = 20.0f;
 
     private bool endOfLifeCycle;
-
+    public bool shoot;
+    public GameObject laser;
 	// Use this for initialization
 	void Start () {
+        laser = GameObject.Find("Laser Pointer");
+        reset();
+	}
+
+    private void reset()
+    {
+        shoot = false;
+        transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        transform.position = new Vector3(-97, 1024, -840);
+        this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+    }
+
+    private void Update()
+    {
+        OVRInput.Update();
+        LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
+        if(OVRInput.Get(OVRInput.RawButton.Y)&&(!shoot))
+        {
+            if(lazerInfo.isHit)
+            {
+                transform.localScale = new Vector3(20, 20, 20);
+                shoot = true;
+                init(lazerInfo.hitPoint);
+            }
+            
+        }
+    }
+
+    private void init(Vector3 targetPosition)
+    {
         endOfLifeCycle = false;
         currentPosition = transform.position;
         /* 
@@ -26,13 +57,13 @@ public class Meteormovement : MonoBehaviour {
          * Either it can read from the target laser object and see where it is pointing OR,
          * the target marker can spawn an empty object (or a visible marker) and the comet can read its position when it is created
          */
-        targetPosition = new Vector3(-831.0f, 378.0f, -1136.0f);
+         
 
         directionVector = targetPosition - currentPosition;
         this.GetComponent<Rigidbody>().AddForce(directionVector * velocity);
         cometTrail = transform.Find("CometTrail").GetComponent<ParticleSystem>();
-	}
-	
+    }
+
     private void Explode(Vector3 impactPos) {
         expObject.transform.position = impactPos;
         ParticleSystem exp = expObject.GetComponent<ParticleSystem>();
@@ -72,6 +103,7 @@ public class Meteormovement : MonoBehaviour {
         repelAllBuildings(impactPosition);
 
         despawnComet();
+        //reset();
     }
 
 }
