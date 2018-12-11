@@ -110,6 +110,7 @@ public class PedestrianObject : MonoBehaviour
             {
                 m_animator.SetInteger("Mode", 1);
                 m_navMeshAgent.SetDestination(gameObject.transform.position);
+                m_navMeshAgent.speed = 0.0f;
             }
         }
             
