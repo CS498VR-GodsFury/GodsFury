@@ -33,6 +33,7 @@ public class MagnetControl : MonoBehaviour {
                 var distCof = towardsVector.magnitude;
                 if (distCof < radius*1.1f) rBody.velocity = new Vector3(0, 0, 0);
                 rBody.AddForce(towardsVector.normalized*900f* rBody.mass);
+                //rBody.AddExplosionForce(10000f * rBody.mass, this.transform.position, radius * 2.25f, 1);
                 //print(distCof);
             }
             catch
@@ -52,7 +53,7 @@ public class MagnetControl : MonoBehaviour {
             {
                 var rBody = collider.gameObject.GetComponent<Rigidbody>();
                 
-                rBody.AddExplosionForce(10f * rBody.mass, this.transform.position, radius * 2.25f, rBody.mass);
+                rBody.AddExplosionForce(45000f * rBody.mass, this.transform.position, radius * 1.55f, 1);
                 //print(distCof);
             }
             catch
@@ -68,6 +69,7 @@ public class MagnetControl : MonoBehaviour {
         {
             return;
         }
+        if (this.radius <= 0) return;
         var dTime = Time.deltaTime;
         var hand = GameObject.Find("leftHand");
         var handPosition = hand.transform.position;
@@ -90,7 +92,11 @@ public class MagnetControl : MonoBehaviour {
         //offset = newOffset;
         if( (newOffset.magnitude > 0.01f)&&(offset.magnitude>1f) )
             this.GetComponent<Rigidbody>().MovePosition(this.transform.position + offset*4f*dTime);
-        checkOverlap();
+        if (this.radius > 0)
+        {
+            print("woof");
+            checkOverlap();
+        }
 
     }
 
