@@ -9,9 +9,10 @@ public class PedestrianObject : MonoBehaviour
 	public  PedestrianSystem.ObjectFrequency    m_assetFrequency      = PedestrianSystem.ObjectFrequency.HIGH;
 
 	public  PedestrianNode                      m_currentNode         = null;                 // the current node that the pedestrian object will travel to 
-	public  float                               m_minSpeed            = 0.5f;                 // the minimum speed that the pedestrian object will travel at              
-	public  float                               m_maxSpeed            = 3.0f;                 // the maximum speed that the pedestrian object will travel at 
-	[Range(0.0f, 1.0f)]
+	public  float                               m_minSpeed            = 1000.0f;                 // the minimum speed that the pedestrian object will travel at              
+	public  float                               m_maxSpeed            = 1000.0f;                 // the maximum speed that the pedestrian object will travel at 
+    public  float                               runningSpeed          = 500.0f;
+    [Range(0.0f, 1.0f)]
 	public  float                               m_percentageOfSpeedToUse = 1.0f;              // 100% uses the entire values from min to max speed. 34% would only use from min to 35% of max speed. Set this to make objects use a certain amount of the full min / max speed value (currently up to 34% allows for walking animation only) 
 	protected float                             m_speed               = 0.0f;                 // the speed that the pedestrian object will travel at            
 	private float                               m_speedStoredWhileWaiting = 0.0f;             // used to record a speed when a node is telling the object to wait ( m_waitAtNode = true )            
@@ -28,7 +29,8 @@ public class PedestrianObject : MonoBehaviour
 
     private NavMeshAgent                        m_navMeshAgent;
     public GameObject                           disaster; 
-    private float                               disaster_size = 10;
+    private float                               disaster_size_unsafe_area = 300
+        ;
     private bool                                has_seen_disaster = false;
 
 	public  PathingStatus                       m_pathingStatus       = PathingStatus.RANDOM; // this determines how the pedestrian object will traverse through the pathing nodes
@@ -85,27 +87,40 @@ public class PedestrianObject : MonoBehaviour
 
 	void Update ()
 	{
-        if(!has_seen_disaster)
-            followPedestrianPaths();
-
-        Vector3 disaster_to_pedestrian_vector = gameObject.transform.position - disaster.transform.position;
-        if (disaster_to_pedestrian_vector.magnitude < disaster_size)
-        {
+        Vector3 disaster_to_pedestrian_vector = (gameObject.transform.position - disaster.transform.position) * runningSpeed;
+        float disaster_size = disaster.GetComponent<Renderer>().bounds.size.magnitude;
+        if (disaster_to_pedestrian_vector.magnitude < disaster_size + disaster_size_unsafe_area)
             has_seen_disaster = true;
-            m_animator.SetInteger("Mode", 2);
-            m_navMeshAgent.SetDestination(gameObject.transform.position + disaster_to_pedestrian_vector);
+
+
+
+        if (!has_seen_disaster) {
+            followPedestrianPaths();
         }
         else
         {
-            m_animator.SetInteger("Mode", 0);
-            m_navMeshAgent.SetDestination(gameObject.transform.position);
+            if (disaster_to_pedestrian_vector.magnitude < disaster_size + disaster_size_unsafe_area)
+            {
+                has_seen_disaster = true;
+                m_animator.SetInteger("Mode", 2);
+                m_navMeshAgent.SetDestination(gameObject.transform.position + disaster_to_pedestrian_vector);
+                m_navMeshAgent.speed = 10.0f;
+            }
+            else
+            {
+                m_animator.SetInteger("Mode", 1);
+                m_navMeshAgent.SetDestination(gameObject.transform.position);
+            }
         }
+            
+
+        
+        
        
 	}
 
     private void followPedestrianPaths()
     {
-        //m_animator.SetInteger("Mode", 0);
 
         if (!m_currentNode)
         {
