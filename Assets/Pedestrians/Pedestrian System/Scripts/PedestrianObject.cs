@@ -9,28 +9,24 @@ public class PedestrianObject : MonoBehaviour
 	public  PedestrianSystem.ObjectFrequency    m_assetFrequency      = PedestrianSystem.ObjectFrequency.HIGH;
 
 	public  PedestrianNode                      m_currentNode         = null;                 // the current node that the pedestrian object will travel to 
-	public  float                               m_minSpeed            = 1000.0f;                 // the minimum speed that the pedestrian object will travel at              
-	public  float                               m_maxSpeed            = 1000.0f;                 // the maximum speed that the pedestrian object will travel at 
-    public  float                               runningSpeed          = 500.0f;
-    [Range(0.0f, 1.0f)]
-	public  float                               m_percentageOfSpeedToUse = 1.0f;              // 100% uses the entire values from min to max speed. 34% would only use from min to 35% of max speed. Set this to make objects use a certain amount of the full min / max speed value (currently up to 34% allows for walking animation only) 
-	protected float                             m_speed               = 0.0f;                 // the speed that the pedestrian object will travel at            
-	private float                               m_speedStoredWhileWaiting = 0.0f;             // used to record a speed when a node is telling the object to wait ( m_waitAtNode = true )            
-	protected float                             m_currentSpeed        = 0.0f;                 // this is always our current speed
-	public  float                               m_startMovingDelayMin = 0.0f;                 // this is the minium delay the object will wait before it starts moving
-	public  float                               m_startMovingDelayMax = 0.0f;                 // this is the maxium delay the object will wait before it starts moving
-	public  float                               m_rotationSpeed       = 3.5f;                 // the speed at which we will rotaion
+    public  float                               m_rotationSpeed       = 3.5f;                 // the speed at which we will rotaion
 	public  bool                                m_onlyRotYAxis        = true;                 // set to true this means the object will stand upright always
-	public  float                               m_nodeThreshold       = 0.1f;                 // how close the pedestrian object needs to get to the m_currentNode before it moves on to another node
+	public  float                               m_nodeThreshold       = 5.0f;                 // how close the pedestrian object needs to get to the m_currentNode before it moves on to another node
 
-	public int                                  m_nodeVisitThreshold  = 2;                    // this is the amount of nodes to remember we have visited so we don't visit the same node again within this threshold
+    private float                               max_walking_speed     = 6.0f;
+    private float                               min_walking_speed     = 4.0f;
+    private float                               walking_speed;
+    private float                               running_speed;
+    
+
+    public int                                  m_nodeVisitThreshold  = 2;                    // this is the amount of nodes to remember we have visited so we don't visit the same node again within this threshold
 	private PedestrianNode[]                    m_prevPedestrianNodes;
 	private int                                 m_nodeVisitIndex      = 0;
 
     private NavMeshAgent                        m_navMeshAgent;
+    private Animator                            m_animator;
     public GameObject                           disaster; 
-    private float                               disaster_size_unsafe_area = 300
-        ;
+    private float                               disaster_size_unsafe_area = 300;
     private bool                                has_seen_disaster = false;
 
 	public  PathingStatus                       m_pathingStatus       = PathingStatus.RANDOM; // this determines how the pedestrian object will traverse through the pathing nodes
@@ -38,11 +34,8 @@ public class PedestrianObject : MonoBehaviour
 	public  Vector3                             m_offsetPosVal        = Vector3.zero;         // the amount to offset the position of this object
 	public  bool                                m_lookAtNode          = true;                 // set this to true if you want the objects forward direction to face the node it is currently going towards
 
-	public  Animator                            m_animator            = null;                 // holds the animator of the object (can be null)
-
 	protected float                             m_lanePosXVariation   = 0.0f;
 	protected float                             m_lanePosZVariation   = 0.0f;
-	protected float                             m_speedVariation      = 0.0f;
 
 	private bool                                ThresholdReached     { get; set; }
 
@@ -53,8 +46,6 @@ public class PedestrianObject : MonoBehaviour
 
 	void Awake () 
 	{
-		m_speed = UnityEngine.Random.Range(m_minSpeed, m_maxSpeed);
-
 		m_prevPedestrianNodes = new PedestrianNode[m_nodeVisitThreshold];
 		for(int nIndex = 0; nIndex < m_prevPedestrianNodes.Length; nIndex++)
 			m_prevPedestrianNodes[nIndex] = null;
@@ -69,91 +60,56 @@ public class PedestrianObject : MonoBehaviour
         m_animator = gameObject.GetComponent<Animator>();
         m_navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
 
+        walking_speed = UnityEngine.Random.Range(min_walking_speed, max_walking_speed);
+        running_speed = walking_speed * 2;
+
 		if(PedestrianSystem.Instance)
 		{
-		    m_speedVariation    = UnityEngine.Random.Range(0.0f, PedestrianSystem.Instance.m_globalSpeedVariation);
 			m_lanePosXVariation = UnityEngine.Random.Range(-PedestrianSystem.Instance.m_globalLanePosVariation, PedestrianSystem.Instance.m_globalLanePosVariation);
 			m_lanePosZVariation = UnityEngine.Random.Range(-PedestrianSystem.Instance.m_globalLanePosVariation, PedestrianSystem.Instance.m_globalLanePosVariation);
 		}
-
-		DetermineSpeed( 0.0f, true ); // set idle (which is 0.0f if the object has an animator)
-
-		yield return new WaitForSeconds(UnityEngine.Random.Range( m_startMovingDelayMin, m_startMovingDelayMax ) );
-
-		DetermineSpeed(UnityEngine.Random.Range(m_minSpeed, m_maxSpeed) );
 
 		yield return null;
 	}
 
 	void Update ()
 	{
-        Vector3 disaster_to_pedestrian_vector = (gameObject.transform.position - disaster.transform.position) * runningSpeed;
+        Vector3 disaster_to_pedestrian_vector = (gameObject.transform.position - disaster.transform.position);
         float disaster_size = disaster.GetComponent<Renderer>().bounds.size.magnitude;
+
         if (disaster_to_pedestrian_vector.magnitude < disaster_size + disaster_size_unsafe_area)
+        {
             has_seen_disaster = true;
-
-
-
-        if (!has_seen_disaster) {
-            followPedestrianPaths();
+            m_animator.SetInteger("Mode", 2);  // running animation
+            m_navMeshAgent.SetDestination(gameObject.transform.position + disaster_to_pedestrian_vector);
+            m_navMeshAgent.acceleration = 1000;
+            m_navMeshAgent.speed = running_speed;
         }
         else
         {
-            if (disaster_to_pedestrian_vector.magnitude < disaster_size + disaster_size_unsafe_area)
-            {
-                has_seen_disaster = true;
-                m_animator.SetInteger("Mode", 2);
-                m_navMeshAgent.SetDestination(gameObject.transform.position + disaster_to_pedestrian_vector);
-                m_navMeshAgent.speed = 10.0f;
-            }
-            else
-            {
-                m_animator.SetInteger("Mode", 1);
-                m_navMeshAgent.SetDestination(gameObject.transform.position);
-                m_navMeshAgent.speed = 0.0f;
-            }
+            followPedestrianPaths();
+            /* m_animator.SetInteger("Mode", 1);
+            m_navMeshAgent.SetDestination(gameObject.transform.position);
+            m_navMeshAgent.speed = 0.0f;
+            */
         }
-            
-
-        
-        
        
 	}
 
     private void followPedestrianPaths()
     {
-
-        if (!m_currentNode)
-        {
-            DetermineSpeed(0.0f, true); // idle animation as we are not walking anywhere
-            return;
-        }
-        
+        if (m_navMeshAgent.speed <= 0.0f)
+            m_animator.SetInteger("Mode", 0); // idle animation
+        else
+            m_animator.SetInteger("Mode", 1); // walking animation
 
         Vector3 dir = m_currentNode.transform.position;
         dir.x += m_lanePosXVariation;
         dir.z += m_lanePosZVariation;
         dir = dir - (transform.position + m_offsetPosVal); // find the direction to the next node
 
-        Vector3 speed = dir.normalized * m_currentSpeed; // work out how fast we should travel in the desired directoin
-
         if (ThresholdReached)
         {
-            if (m_currentNode.m_waitAtNode)
-            {
-                if (m_speed != 0.0f)
-                    m_speedStoredWhileWaiting = m_speed;
-
-                DetermineSpeed(0.0f, true);
-            }
-            else
-            {
-                if (m_speedStoredWhileWaiting != 0.0f)
-                {
-                    DetermineSpeed(m_speedStoredWhileWaiting);
-                    m_speedStoredWhileWaiting = 0.0f;
-                }
-
                 m_prevPedestrianNodes[m_nodeVisitIndex] = m_currentNode;
                 m_nodeVisitIndex++;
                 if (m_nodeVisitIndex >= m_prevPedestrianNodes.Length)
@@ -161,27 +117,15 @@ public class PedestrianObject : MonoBehaviour
 
                 m_currentNode = m_currentNode.NextNode(this);  // find another node or do something else
                 ThresholdReached = false;
-            }
         }
-        else if (dir.magnitude > m_nodeThreshold)
+        else if (dir.magnitude > 5.0f)
         {
-            if (GetComponent<Rigidbody>())                                                                                                       // if we have a rigidbody, use the following code to move us
-            {
-                GetComponent<Rigidbody>().velocity = speed;  // set our rigidbody to this speed to move us by the determined speed 
+            m_navMeshAgent.SetDestination(m_currentNode.transform.position);  // move us by the determined speed
+            m_navMeshAgent.acceleration = 1;
+            m_navMeshAgent.speed = walking_speed;
 
-                if (m_lookAtNode)
-                    transform.forward = Vector3.Slerp(transform.forward, dir.normalized, m_rotationSpeed * Time.deltaTime);   // rotate our forward directoin over time to face the node we are moving towards
-            }
-            else                                                                                                                // no rigidbody then use the following code to move us
-            {
-                if (GetComponent<Collider>())                                                                                                    // it generally is a bad idea to move something with a collider, so we should tell someone about it if this is happening. See Unity Docs for more info: http://docs.unity3d.com/ScriptReference/Collider.html
-                    Debug.LogWarning("Pedestrian System Warning -> Object has a collider. You should think about moving the object with a rigidbody instead.");
-
-                transform.position += speed * Time.deltaTime;                                                                   // move us by the determined speed
-
-                if (m_lookAtNode)
-                    transform.forward = Vector3.Slerp(transform.forward, dir.normalized, m_rotationSpeed * Time.deltaTime);   // rotate our forward directoin over time to face the node we are moving towards
-            }
+            if (m_lookAtNode)
+                transform.forward = Vector3.Slerp(transform.forward, dir.normalized, m_rotationSpeed * Time.deltaTime);   // rotate our forward directoin over time to face the node we are moving towards
 
             if (m_onlyRotYAxis)
                 transform.rotation = Quaternion.Euler(new Vector3(0.0f, transform.eulerAngles.y, 0.0f)); // only rotate around the Y axis.
@@ -190,11 +134,6 @@ public class PedestrianObject : MonoBehaviour
             ThresholdReached = true;
         
     }
-
-    void FixedUpdate()
-	{
-		//DetermineAnimation();
-	}
 
 	void Destroy()
 	{
@@ -206,31 +145,6 @@ public class PedestrianObject : MonoBehaviour
 	{
 		transform.position = a_pos - m_offsetPosVal;
 		     m_currentNode = a_startNode;
-	}
-
-	public void DetermineSpeed( float a_speed, bool a_overrideCurrentSpeed = false )
-	{
-        m_speed = a_speed;
-		m_currentSpeed = m_speed + m_speedVariation;
-
-		m_currentSpeed = m_currentSpeed * m_percentageOfSpeedToUse;
-
-		if(a_overrideCurrentSpeed)
-			m_currentSpeed = m_speed;
-	}
-
-	void DetermineAnimation()
-	{
-		if(m_animator)
-		{
-            //m_animator.SetInteger("Mode", 2);
-            /*
-            if (m_currentSpeed <= 0.0f)
-				m_animator.SetInteger("Mode", 0);
-			else
-                m_animator.SetInteger("Mode", 1);
-                */
-		}
 	}
 
 	public bool HasVisitedNode( PedestrianNode a_node )
