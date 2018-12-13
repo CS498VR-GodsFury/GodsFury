@@ -12,7 +12,7 @@ public class LazerInitialization : MonoBehaviour {
     public Vector3[] LRpoints;
     private Ray lazerRay;
     private bool buttonStatus;
-    private bool isHit;
+    public bool isHit;
 	void Start () {
         hitPoint = new Vector3(0, 0, 0);
         var curRotation = this.transform.localRotation;
