@@ -50,8 +50,6 @@ public class PedestrianObjectSpawner : MonoBehaviour
 		if(PedestrianSystem.Instance)
 			PedestrianSystem.Instance.RegisterObjectSpawner( this );
 
-        m_startNode = gameObject.GetComponent<PedestrianNode>();
-
 		if(m_totalToSpawn <= 0)
 			yield break;
 
@@ -63,7 +61,7 @@ public class PedestrianObjectSpawner : MonoBehaviour
 		}
 
 		yield return new WaitForSeconds(m_onStartDelay);
-        
+
 
 		while(m_totalSpawned < m_totalToSpawn)
 		{
