@@ -32,7 +32,8 @@ public class Meteormovement : MonoBehaviour {
         transform.position = new Vector3(-97, 10240, -840);
         this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         ParticleSystem exp = expObject.GetComponent<ParticleSystem>();
-        exp.Stop();
+        //exp.Stop();
+        
     }
 
     private void Update()
@@ -60,16 +61,13 @@ public class Meteormovement : MonoBehaviour {
         currentPosition = transform.position;
         this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         comet.GetComponent<Rigidbody>().isKinematic = false;
-        /* 
-         * TODO When imported in final project, the way that the comet gets its target position needs to be implemented.
-         * Either it can read from the target laser object and see where it is pointing OR,
-         * the target marker can spawn an empty object (or a visible marker) and the comet can read its position when it is created
-         */
-
 
         directionVector = targetPosition - currentPosition;
         this.GetComponent<Rigidbody>().AddForce(directionVector * velocity);
         cometTrail = transform.Find("CometTrail").GetComponent<ParticleSystem>();
+        cometTrail.Play();
+        ParticleSystem.MainModule ps = cometTrail.main;
+        ps.loop = true;
     }
 
     private void Explode(Vector3 impactPos) {
@@ -118,6 +116,9 @@ public class Meteormovement : MonoBehaviour {
 
         //despawnComet();
         Invoke("reset", 5);
+        //Stop trail animation
+        ParticleSystem.MainModule ps = cometTrail.main;
+        ps.loop = false;
     }
 
 }
