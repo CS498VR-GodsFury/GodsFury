@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 135663050292943618}
   - component: {fileID: 135210785093133776}
   - component: {fileID: 114526522893055314}
+  - component: {fileID: 114899201951178180}
   m_Layer: 0
   m_Name: Comet
   m_TagString: Untagged
@@ -177,6 +178,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   comet: {fileID: 1831644196943660}
   expObject: {fileID: 198780001964147852}
+  shoot: 0
+  laser: {fileID: 0}
+--- !u!114 &114899201951178180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1831644196943660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7762ae7087aee0642a92112d26624ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135210785093133776
 SphereCollider:
   m_ObjectHideFlags: 1

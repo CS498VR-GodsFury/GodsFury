@@ -15,7 +15,7 @@ public class PedestrianObjectSpawner : MonoBehaviour
 	public  float               m_spawnCheckDist             = 0.0f;
 	public  float               m_spawnCheckRadius           = 5.0f;
 	public  float               m_spawnDelayBetweenTries     = 5.0f;
-	public  PedestrianNode      m_startNode                  = null;
+	private  PedestrianNode      m_startNode                  = null;
 	public  bool                m_respawnobjectOnObjectDestroy = true;
 	private List<PedestrianObject> m_objectPool              = new List<PedestrianObject>();     
 
@@ -50,6 +50,8 @@ public class PedestrianObjectSpawner : MonoBehaviour
 		if(PedestrianSystem.Instance)
 			PedestrianSystem.Instance.RegisterObjectSpawner( this );
 
+        m_startNode = gameObject.GetComponent<PedestrianNode>();
+
 		if(m_totalToSpawn <= 0)
 			yield break;
 
@@ -61,7 +63,7 @@ public class PedestrianObjectSpawner : MonoBehaviour
 		}
 
 		yield return new WaitForSeconds(m_onStartDelay);
-
+        
 
 		while(m_totalSpawned < m_totalToSpawn)
 		{
