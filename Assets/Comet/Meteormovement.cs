@@ -20,7 +20,6 @@ public class Meteormovement : MonoBehaviour {
     public GameObject laser;
 	// Use this for initialization
 	void Start () {
-        print("Did we manage to spawn the thing?");
         transform.localScale = new Vector3(10, 10, 10);
         endOfLifeCycle = false;
         laser = GameObject.Find("Laser Pointer");
@@ -30,53 +29,7 @@ public class Meteormovement : MonoBehaviour {
         directionVector = targetPosition - this.transform.position;
         this.GetComponent<Rigidbody>().AddForce(directionVector * velocity);
         cometTrail = transform.Find("CometTrail").GetComponent<ParticleSystem>();
-        //reset();
     }
-
-    /*private void reset()
-    {
-        shoot = false;
-        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-        //transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-        transform.position = new Vector3(-97, 10240, -840);
-        this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-        ParticleSystem exp = expObject.GetComponent<ParticleSystem>();
-        //exp.Stop();
-        
-    }*/
-
-    /*private void Update()
-    {
-        OVRInput.Update();
-        LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
-        if (GameObject.Find("leftHand").GetComponent<LeftHandSelector>().selectedWeapon != "Comet") return;
-        if (OVRInput.Get(OVRInput.RawButton.Y)&&(!shoot))
-        {
-            if(lazerInfo.isHit)
-            {
-                transform.localScale = new Vector3(20, 20, 20);
-                shoot = true;
-                init(lazerInfo.hitPoint);
-            }
-        }
-    }*/
-
-    /*private void init(Vector3 targetPosition)
-    {    
-        var temp = GameObject.Find("OVRCameraRig").transform.position;
-        transform.position = new Vector3(temp.x + Random.Range(-850, 850), temp.y + 1024, temp.z + Random.Range(-850, 850));
-        endOfLifeCycle = false;
-        currentPosition = transform.position;
-        this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        comet.GetComponent<Rigidbody>().isKinematic = false;
-
-        directionVector = targetPosition - currentPosition;
-        this.GetComponent<Rigidbody>().AddForce(directionVector * velocity);
-        cometTrail = transform.Find("CometTrail").GetComponent<ParticleSystem>();
-        cometTrail.Play();
-        ParticleSystem.MainModule ps = cometTrail.main;
-        ps.loop = true;
-    }*/
 
     private void Explode(Vector3 impactPos) {
         expObject.transform.position = impactPos;
@@ -107,14 +60,15 @@ public class Meteormovement : MonoBehaviour {
         comet.GetComponent<Rigidbody>().isKinematic = true;
         ParticleSystem.MainModule ps = cometTrail.main;
         ps.loop = false;
-        Destroy(comet, 5.0f);
+        Destroy(comet, 2.0f);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Can we kill the thing off?");
         if (endOfLifeCycle)
             return;
+
+        if (other.transform.root.GetComponent<Disaster>() != null) return;
 
         endOfLifeCycle = true;
         Vector3 impactPosition = transform.position;
@@ -123,10 +77,6 @@ public class Meteormovement : MonoBehaviour {
         repelAllBuildings(impactPosition);
 
         despawnComet();
-        //Invoke("reset", 5);
-        //Stop trail animation
-        /*ParticleSystem.MainModule ps = cometTrail.main;
-        ps.loop = false;*/
     }
 
 }
