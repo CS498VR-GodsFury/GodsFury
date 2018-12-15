@@ -19,7 +19,7 @@ public class SpawnDisasterScript : MonoBehaviour {
     void Update() {
         string selectedWeapon = GameObject.Find("leftHand").GetComponent<LeftHandSelector>().selectedWeapon;
         OVRInput.Update();
-        bool isButtonNotDown = !OVRInput.GetDown(OVRInput.RawButton.Y);
+        bool isButtonNotDown = !OVRInput.GetDown(OVRInput.RawButton.A);
         if (isButtonNotDown) return;
 
         if (string.Equals(selectedWeapon, "Tornado"))
@@ -45,7 +45,6 @@ public class SpawnDisasterScript : MonoBehaviour {
                 }
         }
         else if (string.Equals(selectedWeapon, "Comet")) {
-                print(OVRInput.GetDown(OVRInput.RawButton.Y));
                 LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
                 if (lazerInfo.isHit)
                 {
@@ -56,4 +55,3 @@ public class SpawnDisasterScript : MonoBehaviour {
         }
     }
 }
-//0.8041326
