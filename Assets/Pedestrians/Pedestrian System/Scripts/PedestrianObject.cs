@@ -26,7 +26,7 @@ public class PedestrianObject : MonoBehaviour
     private NavMeshAgent                        m_navMeshAgent;
     private Animator                            m_animator;
     private float                               disaster_size_unsafe_area = 300;
-    private bool                                has_seen_disaster = false;
+    private bool                                running_from_disaster = true;
 
 	public  PathingStatus                       m_pathingStatus       = PathingStatus.RANDOM; // this determines how the pedestrian object will traverse through the pathing nodes
 	public  int                                 m_pathingIndex        = 0;                    // if the m_pathingStatus is set to INDEX, then the pedestrian object will try to use this index position for the m_nodes associated in the PedestrianNode.cs object 
@@ -112,13 +112,16 @@ public class PedestrianObject : MonoBehaviour
 
     private void avoidDisaster(Disaster disaster)
     {
-        float disaster_size = disaster.GetComponent<Renderer>().bounds.size.magnitude;
+        float disaster_size = 0;
+        Renderer disaster_renderer = disaster.GetComponent<Renderer>();
+        if (disaster_renderer != null)
+            disaster_size = disaster.GetComponent<Renderer>().bounds.size.magnitude;
         Vector3 disaster_to_pedestrian_vector = (gameObject.transform.position - disaster.transform.position);
 
         // Is the disaster close enough for us to try to avoid it?
         if (disaster_to_pedestrian_vector.magnitude < disaster_size + disaster_size_unsafe_area)
         {
-            has_seen_disaster = true;
+            running_from_disaster = true;
             m_animator.SetInteger("Mode", 2);  // running animation
             m_navMeshAgent.SetDestination(gameObject.transform.position + disaster_to_pedestrian_vector);
             m_navMeshAgent.acceleration = 1000;
@@ -144,29 +147,42 @@ public class PedestrianObject : MonoBehaviour
 
         if (ThresholdReached)
         {
-                m_prevPedestrianNodes[m_nodeVisitIndex] = m_currentNode;
-                m_nodeVisitIndex++;
-                if (m_nodeVisitIndex >= m_prevPedestrianNodes.Length)
-                    m_nodeVisitIndex = 0;
+            m_prevPedestrianNodes[m_nodeVisitIndex] = m_currentNode;
+            m_nodeVisitIndex++;
+            if (m_nodeVisitIndex >= m_prevPedestrianNodes.Length)
+                m_nodeVisitIndex = 0;
 
-                m_currentNode = m_currentNode.NextNode(this);  // find another node or do something else
-                ThresholdReached = false;
+            m_currentNode = m_currentNode.NextNode(this);  // find another node or do something else
+            ThresholdReached = false;
+            walkToDestination(m_currentNode.transform.position);
         }
         else if (dir.magnitude > 5.0f)
         {
-            m_navMeshAgent.SetDestination(m_currentNode.transform.position);  // move us by the determined speed
-            m_navMeshAgent.acceleration = 1;
-            m_navMeshAgent.speed = walking_speed;
+            if (running_from_disaster)
+            {
+                walkToDestination(m_currentNode.transform.position);
+                running_from_disaster = false;
+            }
+            
 
+            /*
             if (m_lookAtNode)
                 transform.forward = Vector3.Slerp(transform.forward, dir.normalized, m_rotationSpeed * Time.deltaTime);   // rotate our forward directoin over time to face the node we are moving towards
 
             if (m_onlyRotYAxis)
                 transform.rotation = Quaternion.Euler(new Vector3(0.0f, transform.eulerAngles.y, 0.0f)); // only rotate around the Y axis.
+                */
         }
         else
             ThresholdReached = true;
         
+    }
+
+    void walkToDestination(Vector3 position)
+    {
+        m_navMeshAgent.SetDestination(position);  // move us by the determined speed
+        m_navMeshAgent.acceleration = 1;
+        m_navMeshAgent.speed = walking_speed;
     }
 
 	void Destroy()

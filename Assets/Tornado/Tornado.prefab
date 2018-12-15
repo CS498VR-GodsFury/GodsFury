@@ -112,6 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4130627396546618}
   - component: {fileID: 114452382925672802}
+  - component: {fileID: 114358578505068536}
   m_Layer: 0
   m_Name: Tornado
   m_TagString: Untagged
@@ -444,6 +445,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+--- !u!114 &114358578505068536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1685831685276536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b8fc6b383521a4fb557a9491aee190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114398789396682174
 MonoBehaviour:
   m_ObjectHideFlags: 1
