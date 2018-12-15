@@ -21,7 +21,7 @@ public class Meteormovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         print("Did we manage to spawn the thing?");
-        transform.localScale = new Vector3(20, 20, 20);
+        transform.localScale = new Vector3(10, 10, 10);
         endOfLifeCycle = false;
         laser = GameObject.Find("Laser Pointer");
         LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
