@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TornadoMovementScript : MonoBehaviour {
     private GameObject laser;
-    private float movementSpeed = 30.0f;
+    private float movementSpeed = 70.0f;
     // Use this for initialization
     void Start () {
         laser = GameObject.Find("Laser Pointer");
