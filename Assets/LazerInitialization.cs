@@ -35,9 +35,13 @@ public class LazerInitialization : MonoBehaviour {
         RaycastHit hitInfo = new RaycastHit();
         var controllerR = OVRInput.Controller.RTouch;
         var curPosition = OVRInput.GetLocalControllerPosition(controllerR);
-        
-        if (Physics.Raycast(lazerRay, out hitInfo))
+
+        int layermask = 1 << 2;
+        layermask = ~layermask;
+
+        if (Physics.Raycast(lazerRay, out hitInfo, 100000.0f, layermask))
         {
+            GameObject parent = hitInfo.collider.transform.root.gameObject;
             LRpoints[1] = hitInfo.point;
             isHit = true;
             target.SetActive(true);

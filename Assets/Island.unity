@@ -14630,6 +14630,10 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -0.0625
       objectReference: {fileID: 0}
+    - target: {fileID: 1537203895666540, guid: be2ae8d62dc01714da4c6a1b6a4a7ac6, type: 2}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 54764746814577736, guid: be2ae8d62dc01714da4c6a1b6a4a7ac6, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: be2ae8d62dc01714da4c6a1b6a4a7ac6, type: 2}
@@ -16593,6 +16597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323920688}
   - component: {fileID: 1323920687}
+  - component: {fileID: 1323920689}
   m_Layer: 0
   m_Name: Water4AdvancedReflectionSceneCamera
   m_TagString: Untagged
@@ -16646,13 +16651,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1323920686}
-  m_LocalRotation: {x: -0.118524194, y: 0.015165155, z: 0.0018101519, w: 0.99283373}
-  m_LocalPosition: {x: -687.47723, y: -43.227325, z: -1239.117}
+  m_LocalRotation: {x: -0.15971167, y: 0.15066832, z: 0.024673104, w: 0.9752859}
+  m_LocalPosition: {x: -47.37596, y: -81.21401, z: -188.05124}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &1323920689
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1323920686}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1001 &1327513250
 Prefab:
   m_ObjectHideFlags: 0
@@ -28305,7 +28318,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 8be4581e12050ec489f7b62df781efad, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 8be4581e12050ec489f7b62df781efad, type: 3}
       propertyPath: m_LocalScale.x
@@ -28334,6 +28347,14 @@ Prefab:
     - target: {fileID: 100002, guid: 8be4581e12050ec489f7b62df781efad, type: 3}
       propertyPath: m_Name
       value: leftHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 8be4581e12050ec489f7b62df781efad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 8be4581e12050ec489f7b62df781efad, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be4581e12050ec489f7b62df781efad, type: 3}

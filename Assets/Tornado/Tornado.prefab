@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23985814777121370}
   - component: {fileID: 136397798011293138}
   - component: {fileID: 114398789396682174}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TornadoVortexInnerChild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 136992232529740170}
   - component: {fileID: 114111724699913884}
   - component: {fileID: 114686600789462436}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TornadoVortexChild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 4864850895566480}
   - component: {fileID: 198236922683795232}
   - component: {fileID: 199965923535422580}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TornadoMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 4295563505035204}
   - component: {fileID: 198144927676208886}
   - component: {fileID: 199279631732809234}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Tornado Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 23885064176050626}
   - component: {fileID: 136867608882694388}
   - component: {fileID: 114802654968357622}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TornadoVortexChild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4130627396546618}
   - component: {fileID: 114452382925672802}
   - component: {fileID: 114358578505068536}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Tornado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4720305152696424}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TornadoVortex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 23628293512019098}
   - component: {fileID: 136983952093525364}
   - component: {fileID: 114752923689176050}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TornadoVortexChild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
