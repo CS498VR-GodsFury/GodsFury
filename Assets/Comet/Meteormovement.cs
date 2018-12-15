@@ -12,7 +12,7 @@ public class Meteormovement : MonoBehaviour {
     private float velocity = 10.0f;
     private Vector3 directionVector;
 
-    private const float MAX_POWER = 60000000.0f;
+    private const float MAX_POWER = 600000.0f;
     private const float IMPACT_RADIUS = 75.0f;
 
     private bool endOfLifeCycle;
@@ -47,10 +47,14 @@ public class Meteormovement : MonoBehaviour {
             float power = MAX_POWER;
             try
             {
-                objectBody.AddExplosionForce(power, impactPos, IMPACT_RADIUS, -5.0f, ForceMode.Impulse);
+                if(objectBody != null)
+                    objectBody.AddExplosionForce(power, impactPos, IMPACT_RADIUS, -5.0f, ForceMode.Impulse);
             }
-            catch
-            { }
+            catch (System.Exception e)
+            {
+                Debug.Log("OH NOES!!!");
+                Debug.Log(e);
+            }
         }
     }
 
