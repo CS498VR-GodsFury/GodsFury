@@ -7,6 +7,8 @@ public class LazerInitialization : MonoBehaviour {
     // Use this for initialization
     public GameObject rayTrack;
     public Vector3 hitPoint;
+    private GameObject target;
+    private GameObject cameraRig; 
     Vector3 startControllerPosition;
     Vector3 startCameraPosition;
     public Vector3[] LRpoints;
@@ -21,6 +23,8 @@ public class LazerInitialization : MonoBehaviour {
         this.transform.localRotation = curRotation;
         buttonStatus = false;
         LRpoints = new Vector3[2];
+        target = GameObject.Find("target");
+        cameraRig = GameObject.Find("OVRCameraRig");
     }
 	
     void doRayCasting()
@@ -36,30 +40,33 @@ public class LazerInitialization : MonoBehaviour {
         {
             LRpoints[1] = hitInfo.point;
             isHit = true;
-
+            target.SetActive(true);
             GameObject.Find("targetContainer").transform.position = hitInfo.point - lazerRay.direction * 0.2f;
-            GameObject.Find("target").transform.forward = lazerRay.direction;
+
+            //Scale target impact point based of ray distance
+            float scale = hitInfo.distance * 0.01f;
+            target.transform.localScale = new Vector3(scale, scale, scale);
 
             if (OVRInput.Get(OVRInput.RawButton.RHandTrigger))
             {
                 var offset = (curPosition - startControllerPosition)*(startCameraPosition.y/2);
                 //print(offset);
                 offset.y = 0;
-                GameObject.Find("OVRCameraRig").transform.position = startCameraPosition;
-                GameObject.Find("OVRCameraRig").transform.Translate(- offset, Space.Self);
+                cameraRig.transform.position = startCameraPosition;
+                cameraRig.transform.Translate(- offset, Space.Self);
             }
             else
             {
                 startControllerPosition = curPosition;
-                startCameraPosition = GameObject.Find("OVRCameraRig").transform.position;
+                startCameraPosition = cameraRig.transform.position;
             }
             hitPoint = hitInfo.point;
             if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger))
             {
                 if (!buttonStatus)
                 {
-                    var curY = GameObject.Find("OVRCameraRig").transform.position.y;
-                    GameObject.Find("OVRCameraRig").transform.position = new Vector3(hitPoint.x, curY, hitPoint.z);
+                    var curY = cameraRig.transform.position.y;
+                    cameraRig.transform.position = new Vector3(hitPoint.x, curY, hitPoint.z);
                 }
                 buttonStatus = true;
                 
@@ -72,6 +79,7 @@ public class LazerInitialization : MonoBehaviour {
         else
         {
             isHit = false;
+            target.SetActive(false);
         }
         
     }
