@@ -47,17 +47,23 @@ public class LeftHandSelector : MonoBehaviour {
             if (name == selectedWeapon)
             {
                 GameObject.Find(selectedWeapon).transform.localScale /= 1.35f;
+                GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
                 selectedWeapon = "None";
                 if (isPanelActive)
                     GameObject.Find("Weapon").GetComponent<Text>().text = selectedWeapon;
                 return;
             }
-            if(selectedWeapon!="None")
+            if (selectedWeapon != "None")
+            {
                 GameObject.Find(selectedWeapon).transform.localScale /= 1.35f;
+                GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
+            }
+                
             selectedWeapon = name;
             if(isPanelActive)
                 GameObject.Find("Weapon").GetComponent<Text>().text = name;
             GameObject.Find(selectedWeapon).transform.localScale *= 1.35f;
+            GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
         }
         else if(name=="Quit")
         {
