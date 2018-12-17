@@ -70,6 +70,7 @@ public class HammerControl : MonoBehaviour {
             BPressed = OVRInput.Get(OVRInput.RawButton.B);
         }
         lighteningEnabled = lighteningEnabled && HammerEnabled;
+        lightening.active = lighteningEnabled;
         if ( (!OVRInput.Get(OVRInput.RawButton.LHandTrigger))&&(HammerEnabled) )
         {
             
