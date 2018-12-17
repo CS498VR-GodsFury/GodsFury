@@ -70,7 +70,7 @@ public class LazerInitialization : MonoBehaviour {
                 if (!buttonStatus)
                 {
                     var curY = cameraRig.transform.position.y;
-                    cameraRig.transform.position = new Vector3(hitPoint.x, curY, hitPoint.z);
+                    cameraRig.transform.position = new Vector3(hitPoint.x, hitPoint.y + 2.5f, hitPoint.z) - GameObject.Find("CenterEyeAnchor").transform.forward * 2f ;
                 }
                 buttonStatus = true;
                 

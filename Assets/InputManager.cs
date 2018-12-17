@@ -14,11 +14,12 @@ public class InputManager : MonoBehaviour {
                                                       PlayerPrefs.GetFloat("posY"),
                                                       PlayerPrefs.GetFloat("posZ"));
         if (Vector3.Equals(positionVec, Vector3.zero)) return;
+        /*
         cameraParent.transform.position = positionVec;
         cameraParent.transform.rotation = new Quaternion(PlayerPrefs.GetFloat("rotX"),
                                                       PlayerPrefs.GetFloat("rotY"),
                                                       PlayerPrefs.GetFloat("rotZ"),
-                                                      PlayerPrefs.GetFloat("rotW"));
+                                                      PlayerPrefs.GetFloat("rotW")); */
         Debug.Log("Position; " + cameraParent.transform.position);
     }
 
