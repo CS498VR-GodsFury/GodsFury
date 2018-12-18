@@ -3323,7 +3323,6 @@ GameObject:
   - component: {fileID: 263711016}
   - component: {fileID: 263711015}
   - component: {fileID: 263711014}
-  - component: {fileID: 263711013}
   m_Layer: 0
   m_Name: Magnet
   m_TagString: Untagged
@@ -3349,17 +3348,6 @@ RectTransform:
   m_AnchoredPosition: {x: 87, y: 0}
   m_SizeDelta: {x: 998, y: 998}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &263711013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 263711011}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 711fd7fb48146ab4f9bae9f7fe0d5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &263711014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4511,7 +4499,6 @@ GameObject:
   - component: {fileID: 387547563}
   - component: {fileID: 387547562}
   - component: {fileID: 387547561}
-  - component: {fileID: 387547560}
   m_Layer: 0
   m_Name: Comet
   m_TagString: Untagged
@@ -4537,17 +4524,6 @@ RectTransform:
   m_AnchoredPosition: {x: -915, y: 0}
   m_SizeDelta: {x: 747.2, y: 747.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &387547560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 387547558}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 711fd7fb48146ab4f9bae9f7fe0d5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &387547561
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8187,14 +8163,14 @@ RectTransform:
   m_GameObject: {fileID: 645083896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.2719731, y: 5.3850517, z: 1}
   m_Children: []
   m_Father: {fileID: 1695793417}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.6, y: 3.715}
+  m_AnchoredPosition: {x: -1.6381, y: 3.715}
   m_SizeDelta: {x: 59.83, y: 36.43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645083898
@@ -14306,7 +14282,6 @@ GameObject:
   - component: {fileID: 1068447529}
   - component: {fileID: 1068447528}
   - component: {fileID: 1068447527}
-  - component: {fileID: 1068447526}
   m_Layer: 0
   m_Name: Tornado
   m_TagString: Untagged
@@ -14332,17 +14307,6 @@ RectTransform:
   m_AnchoredPosition: {x: -1762, y: 0}
   m_SizeDelta: {x: 592.2, y: 796.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1068447526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1068447524}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 711fd7fb48146ab4f9bae9f7fe0d5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1068447527
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21857,8 +21821,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1323920686}
-  m_LocalRotation: {x: 0.05284799, y: -0.9426058, z: 0.27584127, w: 0.18059069}
-  m_LocalPosition: {x: -627.18176, y: -499.05212, z: -1086.2563}
+  m_LocalRotation: {x: 0.0031419373, y: 0.9736166, z: 0.22777294, w: -0.013429994}
+  m_LocalPosition: {x: -389.751, y: -8.223228, z: -1067.5776}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -29778,7 +29742,7 @@ GameObject:
   - component: {fileID: 1567109636}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30958,7 +30922,7 @@ RectTransform:
   m_GameObject: {fileID: 1663592972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.00019073473}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.2955, y: 5.4723, z: 1}
   m_Children: []
   m_Father: {fileID: 1924111555}
   m_RootOrder: 0
@@ -31371,7 +31335,7 @@ RectTransform:
   m_GameObject: {fileID: 1695793416}
   m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children:
   - {fileID: 645083897}
   m_Father: {fileID: 1259106892}
@@ -31380,7 +31344,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -2266, y: 23}
-  m_SizeDelta: {x: 49, y: 29}
+  m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!65 &1695793418
 BoxCollider:
@@ -31426,18 +31390,20 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 140
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 200
-    m_Alignment: 0
+    m_MaxSize: 300
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: QUIT
+  m_Text: 'Main
+
+    Menu'
 --- !u!222 &1695793421
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31803,7 +31769,6 @@ GameObject:
   - component: {fileID: 1730929197}
   - component: {fileID: 1730929196}
   - component: {fileID: 1730929198}
-  - component: {fileID: 1730929199}
   m_Layer: 0
   m_Name: Hammer
   m_TagString: Untagged
@@ -31874,17 +31839,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 772, y: 772, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1730929199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1730929194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 711fd7fb48146ab4f9bae9f7fe0d5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1732915598 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 196020, guid: b331863b8ea6edc4e93fc5d6f83dbac6,
@@ -33468,7 +33422,7 @@ RectTransform:
   m_GameObject: {fileID: 1924111554}
   m_LocalRotation: {x: -0.7071068, y: 0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.00019073486}
-  m_LocalScale: {x: 100.000046, y: 100.000046, z: 1.0000011}
+  m_LocalScale: {x: 10, y: 10, z: 1.0000011}
   m_Children:
   - {fileID: 1663592973}
   m_Father: {fileID: 1259106892}
@@ -33476,8 +33430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1626, y: 22.999926}
-  m_SizeDelta: {x: 49, y: 29}
+  m_AnchoredPosition: {x: 2770, y: 22.999926}
+  m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!65 &1924111556
 BoxCollider:
@@ -33523,7 +33477,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 12
+    m_FontSize: 130
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -34163,7 +34117,6 @@ GameObject:
   - component: {fileID: 1956549111}
   - component: {fileID: 1956549113}
   - component: {fileID: 1956549112}
-  - component: {fileID: 1956549114}
   m_Layer: 0
   m_Name: HammerBG
   m_TagString: Untagged
@@ -34222,17 +34175,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1956549110}
   m_CullTransparentMesh: 0
---- !u!114 &1956549114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1956549110}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 711fd7fb48146ab4f9bae9f7fe0d5afe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1960774297
 GameObject:
   m_ObjectHideFlags: 0

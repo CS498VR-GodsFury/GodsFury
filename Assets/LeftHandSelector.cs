@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class LeftHandSelector : MonoBehaviour {
 
     // Use this for initialization
@@ -70,11 +72,7 @@ public class LeftHandSelector : MonoBehaviour {
         }
         else if(name=="Quit")
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            SceneManager.LoadScene("Menu", LoadSceneMode.Single);
         }
         else if (name == "IngamePanelControl")
         {
