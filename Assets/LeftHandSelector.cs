@@ -12,6 +12,8 @@ public class LeftHandSelector : MonoBehaviour {
     public GameObject IngamePanel;
     private bool isMenuActive;
     private bool isPanelActive;
+    private bool isTutorialActive;
+    private TutorialHandler tutorialHandler;
     private float timer;
     private int frameCounter;
     public string selectedWeapon;
@@ -22,8 +24,10 @@ public class LeftHandSelector : MonoBehaviour {
         frameCounter = 0;
         isMenuActive = false;
         isPanelActive = false;
+        isTutorialActive = false;
         GameplayMenu.SetActive(false);
         IngamePanel.SetActive(false);
+        tutorialHandler = GameObject.Find("TutorialHandler").GetComponent<TutorialHandler>();
 
         var curRotation = this.transform.localRotation;
         curRotation.eulerAngles = new Vector3(135, 230, 180);
@@ -39,6 +43,8 @@ public class LeftHandSelector : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         var name = collision.collider.name;
+        tutorialHandler.selectInstructionMessage(name);
+
         if (isPanelActive)
             GameObject.Find("Weapon").GetComponent<Text>().text = selectedWeapon;
         if (name == "Menu")
@@ -53,22 +59,30 @@ public class LeftHandSelector : MonoBehaviour {
                 GameObject.Find(selectedWeapon).transform.localScale /= 1.35f;
                 GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
                 selectedWeapon = "None";
-                
-                return;
+
             }
             else if (selectedWeapon != "None")
             {
                 GameObject.Find(selectedWeapon).transform.localScale /= 1.35f;
                 GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+                selectedWeapon = name;
+
+            } else
+            {
+                selectedWeapon = name;
             }
-                
-            selectedWeapon = name;
+
+            
+
+
             //if(isPanelActive)
             //GameObject.Find("Weapon").GetComponent<Text>().text = name;
             if (selectedWeapon != "None")
             {
                 GameObject.Find(selectedWeapon).transform.localScale *= 1.35f;
             }
+
+
         }
         else if(name=="Quit")
         {
@@ -78,6 +92,30 @@ public class LeftHandSelector : MonoBehaviour {
         {
             isPanelActive ^= true;
             IngamePanel.SetActive(isPanelActive);
+            if (isPanelActive)
+                GameObject.Find("IngamePanelControlBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
+            else
+                GameObject.Find("IngamePanelControlBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
+        }
+         else if(name == "TutorialToggle")
+        {
+            isTutorialActive ^= true;  
+        }
+
+        if (isTutorialActive)
+        {
+            if(isMenuActive)
+                GameObject.Find("TutorialToggleBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
+            tutorialHandler.setTutorialScreensActive(true);
+            tutorialHandler.selectInstructionMessage(selectedWeapon);
+            
+        }
+
+        else
+        {
+            if(isMenuActive)
+                GameObject.Find("TutorialToggleBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
+            tutorialHandler.setTutorialScreensActive(false);
         }
 
     }

@@ -13,7 +13,7 @@ public class HammerControl : MonoBehaviour {
     public GameObject Fire;
     bool hit;
     //bool APressed;
-    bool BPressed;
+    bool APressed;
     //public bool HammerEnabled;
     public bool lightningEnabled;
     float updateTimer;
@@ -54,12 +54,12 @@ public class HammerControl : MonoBehaviour {
 
         if (hammerSelected)
         {
-            if ((!BPressed) && (OVRInput.Get(OVRInput.RawButton.B)))
+            if ((!APressed) && (OVRInput.Get(OVRInput.RawButton.A)))
             {
                 lightningEnabled = !lightningEnabled;
                 lightning.SetActive(lightningEnabled);
             }
-            BPressed = OVRInput.Get(OVRInput.RawButton.B);
+            APressed = OVRInput.Get(OVRInput.RawButton.A);
         }
         else {
             lightningEnabled = false;
