@@ -26,9 +26,12 @@ public class TutorialHandler : MonoBehaviour {
 
     private string cometRight = "Point where you want a comet to land. \n Call upon the fury of the cosmos by pressing <color=red><b>A</b></color>.";
 
-    private string magnetRight = "";
+    private string magnetRight = "Spawn the magnet by pressing <b><color=red>A</color></b>\n" +
+        "Despawn it by pressing <b><color=red>A</color></b> again";
 
-    private string magnetLeft = "";
+    private string magnetLeft = "Point where you want magnet to go.\n\n" +
+        "<color=red><b>Joystick</b></color> left/right -> change size of magnet\n\n" +
+        "<color=red><b>Joystick</b></color> up/down -> move the magnet forward or backward";
 
     private string hammerRight = "You just summoned Thor's Hammer, Mjölner!\n" +
         "Press <b><color=red>A</color></b> to activate the thunder.";

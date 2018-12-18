@@ -9,7 +9,9 @@ public class MagnetControl : MonoBehaviour {
     public float distance;
     Vector3 offset;
     bool APressed;
-	void Start () {
+    float MAX_RADIUS = 70.0f;
+    float MAX_DISTANCE = 500.0f;
+    void Start () {
         offset = new Vector3(0, 0, 0);
         radius = 0f;
         distance = 20f;
@@ -23,7 +25,7 @@ public class MagnetControl : MonoBehaviour {
     void checkOverlap()
     {
         if (radius <= 0) return;
-        var overLapInfo = Physics.OverlapSphere(this.transform.position, radius*1.25f);
+        var overLapInfo = Physics.OverlapSphere(this.transform.position, radius*1.5f);
         foreach(var collider in overLapInfo)
         {
             var towardsVector = this.transform.position - collider.transform.position;
@@ -45,7 +47,7 @@ public class MagnetControl : MonoBehaviour {
 
     void explode()
     {
-        var overLapInfo = Physics.OverlapSphere(this.transform.position, radius * 1.25f);
+        var overLapInfo = Physics.OverlapSphere(this.transform.position, radius * 1.5f);
         foreach (var collider in overLapInfo)
         {
             //var towardsVector = this.transform.position - collider.transform.position;
@@ -53,7 +55,7 @@ public class MagnetControl : MonoBehaviour {
             {
                 var rBody = collider.gameObject.GetComponent<Rigidbody>();
                 
-                rBody.AddExplosionForce(405f*rBody.mass, this.transform.position, radius * 1.55f, 1, ForceMode.Impulse);
+                rBody.AddExplosionForce(405f*rBody.mass, this.transform.position, radius * 1.95f, 1, ForceMode.Impulse);
                 //print(distCof);
             }
             catch
@@ -128,8 +130,9 @@ public class MagnetControl : MonoBehaviour {
                 axis.y = 0;
             else
                 axis.x = 0;
-            this.distance = Mathf.Max(this.radius + 5f, this.distance + axis.y);
-            this.radius = Mathf.Min(this.distance - 5f, this.radius + axis.x*0.03f*this.radius);
+            this.distance = Mathf.Max(this.radius + 5f, this.distance + axis.y * 3);
+            this.distance = Mathf.Min(this.distance, MAX_DISTANCE);
+            this.radius = Mathf.Min(this.distance - 5f, this.radius + axis.x*0.03f*this.radius, MAX_RADIUS);
             this.radius = Mathf.Max(this.radius, 1f);
         }
     }
