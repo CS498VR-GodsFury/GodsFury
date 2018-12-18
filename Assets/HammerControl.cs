@@ -9,13 +9,13 @@ public class HammerControl : MonoBehaviour {
     Vector3 lastLocation;
     Vector3 currentLocation;
     public bool offHand;
-    public GameObject lightening;
+    public GameObject lightning;
     public GameObject Fire;
     bool hit;
-    bool APressed;
+    //bool APressed;
     bool BPressed;
-    public bool HammerEnabled;
-    public bool lighteningEnabled;
+    //public bool HammerEnabled;
+    public bool lightningEnabled;
     float updateTimer;
 	void Start () {
         RB = this.GetComponent<Rigidbody>();
@@ -23,55 +23,50 @@ public class HammerControl : MonoBehaviour {
         currentLocation = this.transform.position;
         offHand = true;
         updateTimer = 0;
-        HammerEnabled = false;
-        lighteningEnabled = false;
+        //HammerEnabled = false;
+        lightningEnabled = false;
 	}
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!lighteningEnabled) return;
+        if (!lightningEnabled) return;
         if(!hit)
         {
-            Fire.active = true;
+            Fire.SetActive(true);
             
-            //print(collision.contacts[0].point);
-            lightening.transform.position = collision.contacts[0].point;
-            lightening.transform.parent = collision.gameObject.transform;
-            //Fire.GetComponent<ParticleSystem>().ex
+            lightning.transform.position = collision.contacts[0].point;
+            lightning.transform.parent = collision.gameObject.transform;
 
         }
         hit = true;
     }
+
     // Update is called once per frame
     void Update () {
-        if(lighteningEnabled)
-            lightening.transform.rotation = Quaternion.identity;
+        if(lightningEnabled)
+            lightning.transform.rotation = Quaternion.identity;
         updateTimer += Time.deltaTime;
         OVRInput.Update();
 
-        if((!APressed)&&(OVRInput.Get(OVRInput.RawButton.A)))
-        {
-            HammerEnabled = !HammerEnabled;
-        }
-        HammerEnabled = HammerEnabled && (GameObject.Find("leftHand").GetComponent<LeftHandSelector>().selectedWeapon == "Hammer");
-        
-        this.GetComponent<MeshRenderer>().enabled = HammerEnabled;
-        this.GetComponent<BoxCollider>().enabled = HammerEnabled;
+        bool hammerSelected = GameObject.Find("leftHand").GetComponent<LeftHandSelector>().selectedWeapon == "Hammer";
+        this.GetComponent<MeshRenderer>().enabled = hammerSelected;
+        this.GetComponent<BoxCollider>().enabled = hammerSelected;
 
-        APressed = OVRInput.Get(OVRInput.RawButton.A);
-
-        if (HammerEnabled)
+        if (hammerSelected)
         {
-            if((!BPressed)&&(OVRInput.Get(OVRInput.RawButton.B)))
+            if ((!BPressed) && (OVRInput.Get(OVRInput.RawButton.B)))
             {
-                lighteningEnabled = !lighteningEnabled;
-                lightening.SetActive(lighteningEnabled);
+                lightningEnabled = !lightningEnabled;
+                lightning.SetActive(lightningEnabled);
             }
             BPressed = OVRInput.Get(OVRInput.RawButton.B);
         }
-        lighteningEnabled = lighteningEnabled && HammerEnabled;
-        lightening.active = lighteningEnabled;
-        if ( (!OVRInput.Get(OVRInput.RawButton.LHandTrigger))&&(HammerEnabled) )
+        else {
+            lightningEnabled = false;
+        }
+        
+        lightning.SetActive(lightningEnabled) ;
+        if ( (!OVRInput.Get(OVRInput.RawButton.LHandTrigger))&&(hammerSelected) )
         {
             
             RB.useGravity = true;
@@ -91,11 +86,11 @@ public class HammerControl : MonoBehaviour {
         {
             offHand = false;
 
-            if (lighteningEnabled)
+            if (lightningEnabled)
             {
-                Fire.active = false;
-                lightening.transform.parent = this.transform;
-                lightening.transform.localPosition = new Vector3(0, 5.49f, 0);
+                Fire.SetActive(false);
+                lightning.transform.parent = this.transform;
+                lightning.transform.localPosition = new Vector3(0, 5.49f, 0);
             }
 
             hit = false;

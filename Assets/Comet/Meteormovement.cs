@@ -41,7 +41,6 @@ public class Meteormovement : MonoBehaviour {
 
     public void Update()
     {
-        Debug.Log("Update");
         run_time +=  Time.deltaTime;
         if (run_time > max_time) {
             Destroy(comet, 0.0f);
@@ -68,7 +67,6 @@ public class Meteormovement : MonoBehaviour {
             }
             catch (System.Exception e)
             {
-                Debug.Log("OH NOES!!!");
                 Debug.Log(e);
             }
         }

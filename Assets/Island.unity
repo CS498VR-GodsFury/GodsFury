@@ -6175,10 +6175,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offHand: 0
-  lightening: {fileID: 585902669}
+  lightning: {fileID: 585902669}
   Fire: {fileID: 1088998772}
-  HammerEnabled: 0
-  lighteningEnabled: 0
+  lightningEnabled: 0
 --- !u!1 &521025615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 144436, guid: b5d1e76460194cc4f990cb26e3d0ec10,
@@ -21822,7 +21821,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1323920686}
   m_LocalRotation: {x: 0.23248424, y: 0.41120985, z: 0.1093079, w: -0.874591}
-  m_LocalPosition: {x: -656.05743, y: -25.524452, z: -1067.3088}
+  m_LocalPosition: {x: -133.4577, y: -249.04344, z: -1072.0428}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

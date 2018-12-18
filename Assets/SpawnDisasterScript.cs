@@ -24,34 +24,35 @@ public class SpawnDisasterScript : MonoBehaviour {
 
         if (string.Equals(selectedWeapon, "Tornado"))
         {
-                print("Pressed Y");
-                if (!tornadoActive)
-                {
-                    print("We are spawning a tornado!");
-                    tornadoActive = true;
-                    LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
-                    if (lazerInfo.isHit)
-                    {
-                        Vector3 lazerPos = lazerInfo.hitPoint;
-                        tornadoInstance = Instantiate(tornadoPrefab, lazerPos, tornadoPrefab.transform.rotation);
-                    }
-
-                }
-                else if (tornadoActive)
-                {
-                    tornadoActive = false;
-                    Destroy(tornadoInstance, 0.1f);
-
-                }
-        }
-        else if (string.Equals(selectedWeapon, "Comet")) {
+            print("Pressed Y");
+            if (!tornadoActive)
+            {
+                print("We are spawning a tornado!");
+                tornadoActive = true;
                 LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
                 if (lazerInfo.isHit)
                 {
-                    Vector3 cameraPos = this.transform.position;
-                    Vector3 cometPos = new Vector3(cameraPos.x + Random.Range(-850, 850), cameraPos.y + 1024, cameraPos.z + Random.Range(-850, 850));
-                    Instantiate(cometPrefab, cometPos, cometPrefab.transform.rotation);
+                    Vector3 lazerPos = lazerInfo.hitPoint;
+                    tornadoInstance = Instantiate(tornadoPrefab, lazerPos, tornadoPrefab.transform.rotation);
                 }
+
+            }
+            else if (tornadoActive)
+            {
+                tornadoActive = false;
+                Destroy(tornadoInstance, 0.1f);
+
+            }
+        }
+        else if (string.Equals(selectedWeapon, "Comet"))
+        {
+            LazerInitialization lazerInfo = laser.GetComponent<LazerInitialization>();
+            if (lazerInfo.isHit)
+            {
+                Vector3 cameraPos = this.transform.position;
+                Vector3 cometPos = new Vector3(cameraPos.x + Random.Range(-850, 850), cameraPos.y + 1024, cameraPos.z + Random.Range(-850, 850));
+                Instantiate(cometPrefab, cometPos, cometPrefab.transform.rotation);
+            }
         }
     }
 }
