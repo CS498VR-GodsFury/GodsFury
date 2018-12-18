@@ -13,6 +13,8 @@ public class Meteormovement : MonoBehaviour {
     private Vector3 targetPosition;
     private float velocity = 10.0f;
     private Vector3 directionVector;
+    private float max_time = 10.0f;
+    private float run_time;
 
     private const float MAX_POWER = 600000.0f;
     private const float IMPACT_RADIUS = 75.0f;
@@ -23,6 +25,7 @@ public class Meteormovement : MonoBehaviour {
     public GameObject laser;
 	// Use this for initialization
 	void Start () {
+        run_time = 0.0f;
         transform.localScale = new Vector3(10, 10, 10);
         endOfLifeCycle = false;
         laser = GameObject.Find("Laser Pointer");
@@ -36,6 +39,14 @@ public class Meteormovement : MonoBehaviour {
         sound = this.GetComponent<AudioSource>();
     }
 
+    public void Update()
+    {
+        Debug.Log("Update");
+        run_time +=  Time.deltaTime;
+        if (run_time > max_time) {
+            Destroy(comet, 0.0f);
+        }
+    }
     private void Explode(Vector3 impactPos) {
         expObject.transform.position = impactPos;
         ParticleSystem exp = expObject.GetComponent<ParticleSystem>();
@@ -82,6 +93,8 @@ public class Meteormovement : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+
+
         if (endOfLifeCycle)
             return;
 
