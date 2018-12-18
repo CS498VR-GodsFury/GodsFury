@@ -13,12 +13,12 @@ public class BGManipulation : MonoBehaviour {
 
     private void OnCollisionStay(Collision collision)
     {
-        GameObject.Find(this.name + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
+        //GameObject.Find(this.name + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        GameObject.Find(this.name + "BG").GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
+        //GameObject.Find(this.name + "BG").GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
     }
 
     // Update is called once per frame

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class MenuLaserPointer : MonoBehaviour {
 
     public GameObject laserPointer;
-    public LineRenderer line;
     private GameObject target;
 
 	// Use this for initialization
@@ -27,8 +26,6 @@ public class MenuLaserPointer : MonoBehaviour {
             //Scale target impact point based of ray distance
             float scale = hit.distance * 0.01f;
             target.transform.localScale = new Vector3(scale, scale, scale);
-
-            line.SetPosition(1, new Vector3(hit.distance, 0, 0));
 
             if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {

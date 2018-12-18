@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour {
     public GameObject cameraParent;
+    public AudioSource playerAudioSource;
 
 
     // Use this for initialization
@@ -14,7 +15,9 @@ public class InputManager : MonoBehaviour {
                                                       PlayerPrefs.GetFloat("posY"),
                                                       PlayerPrefs.GetFloat("posZ"));
         if (Vector3.Equals(positionVec, Vector3.zero)) return;
-        /*
+
+        playerAudioSource.Play();
+
         cameraParent.transform.position = positionVec;
         cameraParent.transform.rotation = new Quaternion(PlayerPrefs.GetFloat("rotX"),
                                                       PlayerPrefs.GetFloat("rotY"),

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class Meteormovement : MonoBehaviour {
     public GameObject comet;
     public ParticleSystem expObject;
     private ParticleSystem cometTrail;
+    public AudioClip explosion;
 
     //private Vector3 currentPosition;
     private Vector3 targetPosition;
@@ -15,6 +17,7 @@ public class Meteormovement : MonoBehaviour {
     private const float MAX_POWER = 600000.0f;
     private const float IMPACT_RADIUS = 75.0f;
 
+    private AudioSource sound;
     private bool endOfLifeCycle;
     public bool shoot;
     public GameObject laser;
@@ -29,6 +32,8 @@ public class Meteormovement : MonoBehaviour {
         directionVector = targetPosition - this.transform.position;
         this.GetComponent<Rigidbody>().AddForce(directionVector * velocity);
         cometTrail = transform.Find("CometTrail").GetComponent<ParticleSystem>();
+
+        sound = this.GetComponent<AudioSource>();
     }
 
     private void Explode(Vector3 impactPos) {
@@ -67,6 +72,14 @@ public class Meteormovement : MonoBehaviour {
         Destroy(comet, 2.0f);
     }
 
+    private void playExplosionSound()
+    {
+        sound.loop = false;
+        sound.clip = explosion;
+        sound.Play();
+        
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (endOfLifeCycle)
@@ -80,7 +93,10 @@ public class Meteormovement : MonoBehaviour {
 
         repelAllBuildings(impactPosition);
 
+        playExplosionSound();
+
         despawnComet();
     }
 
+   
 }
