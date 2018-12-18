@@ -12,6 +12,13 @@ public class SceneLoader : MonoBehaviour {
         SceneManager.LoadScene("Island", LoadSceneMode.Single);
     }
 
+    public void loadIslandLevelWithTutorial()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetString("TutorialEnabled", "Activated");
+        SceneManager.LoadScene("Island", LoadSceneMode.Single);
+    }
+
     public void quitGame()
     {
 #if UNITY_EDITOR

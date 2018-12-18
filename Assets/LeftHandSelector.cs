@@ -34,10 +34,13 @@ public class LeftHandSelector : MonoBehaviour {
         this.transform.localPosition = new Vector3(0, 0, 0);
         this.transform.localRotation = curRotation;
 
-        
         selectedWeapon = "None";
         //weaponNames = new string[3];
         weaponNames = new[]{ "Tornado", "Comet", "Magnet", "Hammer" };
+
+        if (PlayerPrefs.GetString("TutorialEnabled") == "Activated") {
+            enableTutorial();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -104,17 +107,13 @@ public class LeftHandSelector : MonoBehaviour {
 
         if (isTutorialActive)
         {
-            if(isMenuActive)
-                GameObject.Find("TutorialToggleBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
-            tutorialHandler.setTutorialScreensActive(true);
-            tutorialHandler.selectInstructionMessage(selectedWeapon);
+            enableTutorial();
             
         }
 
         else
         {
-            if(isMenuActive)
-                GameObject.Find("TutorialToggleBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
+            GameObject.Find("TutorialToggleBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
             tutorialHandler.setTutorialScreensActive(false);
         }
 
@@ -134,4 +133,10 @@ public class LeftHandSelector : MonoBehaviour {
             frameCounter = 0;
         }
 	}
+
+    void enableTutorial() {
+        GameObject.Find("TutorialToggleBG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
+        tutorialHandler.setTutorialScreensActive(true);
+        tutorialHandler.selectInstructionMessage(selectedWeapon);
+    }
 }
