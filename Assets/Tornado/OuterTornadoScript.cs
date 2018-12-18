@@ -8,6 +8,8 @@ public class OuterTornadoScript : MonoBehaviour {
     {
         if(other.gameObject.tag == "Unpullable")
         {
+            //other.gameObject.layer = 0 << 2;
+            other.gameObject.layer = LayerMask.NameToLayer("Default");
             other.gameObject.tag = "Untagged";
             other.gameObject.GetComponent<Rigidbody>().useGravity = true;
         }

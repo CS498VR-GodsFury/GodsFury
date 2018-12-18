@@ -7,6 +7,7 @@ TagManager:
   - disaster
   - Fire
   - Terrain
+  - Unpullable
   layers:
   - Default
   - TransparentFX
