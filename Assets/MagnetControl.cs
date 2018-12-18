@@ -53,7 +53,7 @@ public class MagnetControl : MonoBehaviour {
             {
                 var rBody = collider.gameObject.GetComponent<Rigidbody>();
                 
-                rBody.AddExplosionForce(4005f*rBody.mass, this.transform.position, radius * 1.55f, 1, ForceMode.Impulse);
+                rBody.AddExplosionForce(405f*rBody.mass, this.transform.position, radius * 1.55f, 1, ForceMode.Impulse);
                 //print(distCof);
             }
             catch

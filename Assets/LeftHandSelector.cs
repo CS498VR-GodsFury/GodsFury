@@ -24,20 +24,22 @@ public class LeftHandSelector : MonoBehaviour {
         IngamePanel.SetActive(false);
 
         var curRotation = this.transform.localRotation;
-        curRotation.eulerAngles = new Vector3(135, 190, 180);
+        curRotation.eulerAngles = new Vector3(135, 230, 180);
         this.transform.localPosition = new Vector3(0, 0, 0);
         this.transform.localRotation = curRotation;
 
         
         selectedWeapon = "None";
         //weaponNames = new string[3];
-        weaponNames = new[]{ "Tornado", "Comet", "Magnet" };
+        weaponNames = new[]{ "Tornado", "Comet", "Magnet", "Hammer" };
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         var name = collision.collider.name;
-        if(name == "Menu")
+        if (isPanelActive)
+            GameObject.Find("Weapon").GetComponent<Text>().text = selectedWeapon;
+        if (name == "Menu")
         {
             isMenuActive ^= true;
             GameplayMenu.SetActive(isMenuActive);
@@ -47,23 +49,24 @@ public class LeftHandSelector : MonoBehaviour {
             if (name == selectedWeapon)
             {
                 GameObject.Find(selectedWeapon).transform.localScale /= 1.35f;
-                GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
+                GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
                 selectedWeapon = "None";
-                if (isPanelActive)
-                    GameObject.Find("Weapon").GetComponent<Text>().text = selectedWeapon;
+                
                 return;
             }
-            if (selectedWeapon != "None")
+            else if (selectedWeapon != "None")
             {
                 GameObject.Find(selectedWeapon).transform.localScale /= 1.35f;
-                GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0);
+                GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
             }
                 
             selectedWeapon = name;
-            if(isPanelActive)
-                GameObject.Find("Weapon").GetComponent<Text>().text = name;
-            GameObject.Find(selectedWeapon).transform.localScale *= 1.35f;
-            GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
+            //if(isPanelActive)
+            //GameObject.Find("Weapon").GetComponent<Text>().text = name;
+            if (selectedWeapon != "None")
+            {
+                GameObject.Find(selectedWeapon).transform.localScale *= 1.35f;
+            }
         }
         else if(name=="Quit")
         {
@@ -85,6 +88,8 @@ public class LeftHandSelector : MonoBehaviour {
         var deltaTime = Time.deltaTime;
         timer += deltaTime;
         frameCounter += 1;
+        if(selectedWeapon!="None")
+            GameObject.Find(selectedWeapon + "BG").GetComponent<RawImage>().color = new Color(255, 167, 0, 0.5f);
         if (timer > 0.3f)
         {
             timer = 0;

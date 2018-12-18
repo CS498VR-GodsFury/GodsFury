@@ -7,7 +7,7 @@ public class BGManipulation : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        print(this.name + "BG");
+        //print(this.name + "BG");
         GameObject.Find(this.name + "BG").GetComponent<RawImage>().color = new Color(255, 255, 255, 0);
 	}
 

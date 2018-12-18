@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour {
         cameraParent.transform.rotation = new Quaternion(PlayerPrefs.GetFloat("rotX"),
                                                       PlayerPrefs.GetFloat("rotY"),
                                                       PlayerPrefs.GetFloat("rotZ"),
-                                                      PlayerPrefs.GetFloat("rotW"));
+                                                      PlayerPrefs.GetFloat("rotW")); */
         Debug.Log("Position; " + cameraParent.transform.position);
     }
 
