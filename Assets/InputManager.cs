@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class InputManager : MonoBehaviour {
     public GameObject cameraParent;
     public AudioSource playerAudioSource;
+    public GameObject pedestrians;
 
 
     // Use this for initialization
@@ -14,6 +15,11 @@ public class InputManager : MonoBehaviour {
         Vector3 positionVec = new Vector3(PlayerPrefs.GetFloat("posX"),
                                                       PlayerPrefs.GetFloat("posY"),
                                                       PlayerPrefs.GetFloat("posZ"));
+
+        if (PlayerPrefs.GetInt("Pedestrians") == 1) {
+            pedestrians.SetActive(true);
+        }
+
         if (Vector3.Equals(positionVec, Vector3.zero)) return;
 
         playerAudioSource.Play();
@@ -23,7 +29,7 @@ public class InputManager : MonoBehaviour {
                                                       PlayerPrefs.GetFloat("rotY"),
                                                       PlayerPrefs.GetFloat("rotZ"),
                                                       PlayerPrefs.GetFloat("rotW"));
-        Debug.Log("Position; " + cameraParent.transform.position);
+        
     }
 
         // Update is called once per frame

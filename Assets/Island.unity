@@ -3544,6 +3544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraParent: {fileID: 1728349418}
   playerAudioSource: {fileID: 2051563764}
+  pedestrians: {fileID: 922759056}
 --- !u!4 &276092113
 Transform:
   m_ObjectHideFlags: 0
@@ -12483,6 +12484,11 @@ Prefab:
 --- !u!4 &922759055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 471830, guid: 5af30de199c71574eb49b1b3afb79535,
+    type: 2}
+  m_PrefabInternal: {fileID: 922759054}
+--- !u!1 &922759056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 171830, guid: 5af30de199c71574eb49b1b3afb79535,
     type: 2}
   m_PrefabInternal: {fileID: 922759054}
 --- !u!1 &923575234 stripped
@@ -22165,8 +22171,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1323920686}
-  m_LocalRotation: {x: -0.2219843, y: 0.45239693, z: 0.11735607, w: 0.85573804}
-  m_LocalPosition: {x: -877.04034, y: -220.85497, z: -1335.229}
+  m_LocalRotation: {x: 0.0034963677, y: 0.9963731, z: 0.06767241, w: -0.051467065}
+  m_LocalPosition: {x: 452.27228, y: 7.9287796, z: 1791.1317}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

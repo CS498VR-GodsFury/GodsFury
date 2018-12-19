@@ -29,10 +29,16 @@ public class MenuLaserPointer : MonoBehaviour {
 
             if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
-                if(hit.collider.GetComponent<Button>() != null)
+                if (hit.collider.GetComponent<Button>() != null)
                 {
                     Button button = hit.collider.GetComponent<Button>();
                     button.onClick.Invoke();
+                }
+                else if (hit.collider.GetComponent<Toggle>()) {
+                    
+                    Toggle toggle = hit.collider.GetComponent<Toggle>();
+                    Debug.Log("Hit checkbox " + toggle.isOn);
+                    toggle.isOn = !toggle.isOn;  
                 }
             }
 

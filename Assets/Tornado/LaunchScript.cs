@@ -15,7 +15,7 @@ public class LaunchScript : MonoBehaviour {
             pulledObj.GetComponent<Rigidbody>().useGravity = false;
             System.Random random = new System.Random();
             float r = (float) random.NextDouble() * 0.2f;
-            objBody.AddForce(new Vector3(0.0f + r/2, 1.0f - r, 0.0f + r/2) * 30000.0f);
+            objBody.AddForce(new Vector3(0.0f + r/2, 1.0f - r, 0.0f + r/2) * 300000.0f);
 
             pulledObj.tag = "Unpullable";
             pulledObj.layer = LayerMask.NameToLayer("Ignore Raycast");
