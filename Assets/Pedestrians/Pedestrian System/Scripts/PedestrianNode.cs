@@ -8,8 +8,8 @@ public class PedestrianNode : MonoBehaviour
 	public  List<PedestrianNode>        m_nodes              = new List<PedestrianNode>();
 	public  bool                        m_waitAtNode         = false;
 	public  int                         m_pathID             = 1;
-
-	void Awake () 
+    public Renderer renderer;
+    void Awake () 
 	{
 		#if !UNITY_EDITOR
 			if(Application.isPlaying)
